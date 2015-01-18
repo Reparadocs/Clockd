@@ -51,7 +51,7 @@ class Employee(models.Model):
 
    def clockin(self):
       curentry = self.entry_set.filter(current=True)
-      if curentry.count is 0:
+      if curentry.count() is 0:
          entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))
          self.save()
          entry.save()
@@ -61,7 +61,7 @@ class Employee(models.Model):
 
    def clockout(self):
       current_entry = self.entry_set.filter(current=True)
-      if(current_entry.count is 1):
+      if current_entry.count() is 1:
          current_entry.clockout(self.hourly_rate)
          return True
       else:
