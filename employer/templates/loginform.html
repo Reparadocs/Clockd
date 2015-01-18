@@ -1,0 +1,120 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+   <meta charset="utf-8" />
+   <title>Clock'd Login'</title>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   <meta content="" name="description" />
+   <meta content="" name="author" />
+   <!-- BEGIN GLOBAL MANDATORY STYLES -->
+   <link href="{% static "bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
+   <link href="{% static "bootstrap-responsive.min.css" %}" rel="stylesheet" type="text/css"/>
+   <link href="{% static "font-awesome.min.css" %}" rel="stylesheet" type="text/css"/>
+   <link href="{% static "style-metro.css" %}" rel="stylesheet" type="text/css"/>
+   <link href="{% static "style.css" %}" rel="stylesheet" type="text/css"/>
+   <link href="{% static "style-responsive.css" %}" rel="stylesheet" type="text/css"/>
+   <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" id="style_color"/>
+   <link rel="stylesheet" type="text/css" href="{% static "select2_metro.css" %}" />
+   <!-- END GLOBAL MANDATORY STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   <link href="{% static "login-soft.css" %}" rel="stylesheet" type="text/css"/>
+   <!-- END PAGE LEVEL STYLES -->
+   <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login">
+   <!-- BEGIN LOGO -->
+   <div class="logo">
+      <!-- PUT YOUR LOGO HERE -->
+      <img src="{% static "clocklogo.png" %}" alt="Smiley face" height="130" width="130">
+   </div>
+   <!-- END LOGO -->
+   <!-- BEGIN LOGIN -->
+   <div class="content">
+      <!-- BEGIN LOGIN FORM -->
+      <form class="form-vertical login-form" action="" method="post">
+         <h3 class="form-title" align="center">Manager Login</h3>
+         {% csrf_token %}
+         <div class="control-group">
+            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+            <label>Company Name</label>
+            <div class="controls">
+               <div>
+                  {{form.name}}
+               </div>
+            </div>
+            <div>{{form.name.errors}}</div>
+         </div>
+         <div class="control-group">
+            <label >PIN</label>
+            <div class="controls">
+               <div>
+                  {{form.pin}}
+               </div>
+            </div>
+            <div>{{form.pin.errors}}</div>
+         </div>
+         <div class="form-actions">
+            <button type="submit" class="red btn" value="Submit">
+            Login
+            </button>            
+         </div>
+         <div class="create-account">
+            <p>
+               Don't have an account yet ?&nbsp; 
+               <a href="{% url 'register' %}" id="register-btn" >Create an account</a>
+            </p>
+         </div>
+      </form>
+      <!-- END LOGIN FORM -->        
+      
+      <!-- END FORGOT PASSWORD FORM -->
+     
+   </div>
+   <!-- END LOGIN -->
+   <!-- BEGIN COPYRIGHT -->
+   <div class="copyright">
+      2015 &copy; <a href="http://www.clockd.co">Clock'd</a>
+   </div>
+   <!-- END COPYRIGHT -->
+   <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+   <!-- BEGIN CORE PLUGINS -->   <script src="{% static "jquery-1.10.1.min.js"%}" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+   <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+   <script src="{% static "jquery-ui-1.10.1.custom.min.js"%}" type="text/javascript"></script>      
+   <script src="{% static "bootstrap.min.js"%}" type="text/javascript"></script>
+   <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+   <!--[if lt IE 9]>
+   <script src="assets/plugins/excanvas.min.js"></script>
+   <script src="assets/plugins/respond.min.js"></script>  
+   <![endif]-->   
+   <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+   <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+   <!-- END CORE PLUGINS -->
+   <!-- BEGIN PAGE LEVEL PLUGINS -->
+   <script src="assets/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+   <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+   <!-- END PAGE LEVEL PLUGINS -->
+   <!-- BEGIN PAGE LEVEL SCRIPTS -->
+   <script src="assets/scripts/app.js" type="text/javascript"></script>
+   <script src="assets/scripts/login-soft.js" type="text/javascript"></script>      
+   <!-- END PAGE LEVEL SCRIPTS --> 
+   <script>
+      jQuery(document).ready(function() {     
+        App.init();
+        Login.init();
+      });
+   </script>
+   <!-- END JAVASCRIPTS -->
+   
+</body>
+<!-- END BODY -->
+</html>

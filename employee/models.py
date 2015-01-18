@@ -51,16 +51,20 @@ class Employee(models.Model):
       curentry = self.entry_set.filter(current=True)
       if curentry.count() is 1:
          current_entry = curentry[0]
-         return (timezone.localtime(timezone.now()) - current_entry.time_in)
+         return (timezone.localtime(timezone.now()) - current_entry.time_in).seconds
       else:
          return 0
 
    def str_time_since_clockin(self):
-      td_sec = self.time_since_clockin().seconds
+      td_sec = self.time_since_clockin()
       hours = int(td_sec / 3600)
-      minutes = int((hours % 3600) / 60)
-      return str(hours) + " hours, " + str(minutes) + " minutes"
+      minutes = int((td_sec % 3600) / 60)
+      if self.logged_in is True:
+         return "For " + str(hours) + " hours, " + str(minutes) + " minutes"
+      return "No"
 
+   def get_hourly_rate(self):
+      return self.hourly_rate/100.0
    def clockin(self):
       curentry = self.entry_set.filter(current=True)
       if curentry.count() is 0:
@@ -83,6 +87,29 @@ class Employee(models.Model):
       else:
          return False
 
+   def get_pay_period(self):
+      curtime = "1/04/2015"
+      pasttime = "1/19/2015"
+      total = self.get_pay(curtime, pasttime)
+      return total/100.0
+
+   def get_str_hours_period(self):
+      curtime = "1/04/2015"
+      pasttime = "1/19/2015"
+      hist = self.get_history(curtime, pasttime)
+      td_sec = 0
+      for entry in hist:
+         if entry.time_out:
+            td_sec += (entry.time_out - entry.time_in).seconds
+      hours = int(td_sec / 3600)
+      minutes = int((td_sec % 3600) / 60)
+      return str(hours) + " hours, " + str(minutes) + " minutes"
+
+   def get_hours_period(self):
+      curtime = "1/04/2015"
+      pasttime = "1/19/2015"
+      return self.get_approx_hours_hist(curtime, pasttime)
+
    def get_pay(self, datetime1, datetime2):
       history = self.get_history(datetime1, datetime2)
       total = 0
@@ -91,20 +118,34 @@ class Employee(models.Model):
       return total
 
    def get_approx_hours(self, datetime1, datetime2):
-      dt_sec = (datetime2 - datetime1).sec
+      dt_sec = (datetime2 - datetime1).seconds
       return int(dt_sec/3600)
 
    def get_approx_hours_hist(self, datetime1, datetime2):
       history = self.get_history(datetime1, datetime2)
       total_hours = 0
       for entry in history:
-         total_hours += get_approx_hours(entry.time_in, entry.time_out)
+         if entry.time_out:
+            total_hours += self.get_approx_hours(entry.time_in, entry.time_out)
       return total_hours
 
+   def get_overtime_color(self):
+      shift_hours = int(self.time_since_clockin()/3600)
+      period_start = "1/12/2015"
+      period_end = "1/19/2015"
+      period_hours = self.get_approx_hours_hist(period_start, period_end)
+      if shift_hours < 8 and period_hours < 40:
+         return "#00FF00"
+      elif shift_hours < 12 and period_hours < 55:
+         return "#FF6600"
+      else:
+         return "#FF0000"
+
    def get_overtime(self):
-      shift_hours = int(time_since_clockin()/3600)
-      period_start = timezone.localtime(timezone.now()) - datetime.timedelta(days=14)
-      period_hours = get_approx_hours_hist(period_start, timezone.localtime(timezone.now()))
+      shift_hours = int(self.time_since_clockin()/3600)
+      period_start = "1/12/2015"
+      period_end = "1/19/2015"
+      period_hours = self.get_approx_hours_hist(period_start, period_end)
       if shift_hours < 8 and period_hours < 40:
          return "1x"
       elif shift_hours < 12 and period_hours < 55:
