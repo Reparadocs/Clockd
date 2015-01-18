@@ -81,7 +81,7 @@ class Entry(models.Model):
    pay = models.IntegerField(default=0)
 
    def clockout(self, rate):
-      self.time_out = timezone.localtime(timezone.now()))
+      self.time_out = timezone.localtime(timezone.now())
       self.current = False
       seconds = (self.time_out - self.time_in).seconds
       self.pay = int(seconds * rate / 3600)
