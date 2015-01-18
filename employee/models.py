@@ -50,7 +50,7 @@ class Employee(models.Model):
       self.save()
 
    def clockin(self):
-      entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))))
+      entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))
       self.save()
       entry.save()
 
