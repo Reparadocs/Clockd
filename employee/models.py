@@ -1,8 +1,8 @@
 from django.db import models
+from django.utils import timezone
 from employer.models import Employer
 import random
 import datetime
-import pytz
 
 def get_date_time(arr):
    string = "%02d-%02d-%d"%(arr[1],arr[0],arr[2])
@@ -50,7 +50,7 @@ class Employee(models.Model):
       self.save()
 
    def clockin(self):
-      entry = Entry(employee=self, time_in=datetime.datetime.now().replace(tzinfo=pytz.timezone('US/Pacific')))
+      entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))))
       self.save()
       entry.save()
 
@@ -81,7 +81,7 @@ class Entry(models.Model):
    pay = models.IntegerField(default=0)
 
    def clockout(self, rate):
-      self.time_out = datetime.datetime.now().replace(tzinfo=pytz.timezone('US/Pacific'))
+      self.time_out = timezone.localtime(timezone.now()))
       self.current = False
       seconds = (self.time_out - self.time_in).seconds
       self.pay = int(seconds * rate / 3600)
