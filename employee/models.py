@@ -64,8 +64,8 @@ class Employee(models.Model):
       curentry = self.entry_set.filter(current=True)
       if curentry.count() is 0:
          self.logged_in = True
-         entry = Entry(employee=self, time_in=timezone.localtime(timezone.now),
-            time_1 = datetime.datetime.strftime("%m/%d/%Y %H:%M", timezone.localtime(timezone.now)))
+         entry = Entry(employee=self, time_in=timezone.localtime(timezone.now)-datetime.timedelta(hours=8))
+         entry.time_1 = datetime.datetime.strftime("%m/%d/%Y %H:%M", entry.time_in)
          self.save()
          entry.save()
          return True
@@ -120,15 +120,15 @@ class Employee(models.Model):
 
 class Entry(models.Model):
    time_in = models.DateTimeField()
-   time_1 = models.CharField(max_length=30)
-   time_2 = models.CharField(max_length=30)
+   time_1 = models.CharField(max_length=30, null=True, blank=True)
+   time_2 = models.CharField(max_length=30, null=True, blank=True)
    current = models.BooleanField(default=True)
    time_out = models.DateTimeField(blank = True, null = True)
    employee = models.ForeignKey(Employee)
    pay = models.IntegerField(default=0)
 
    def clockout(self, rate):
-      self.time_out = timezone.localtime(timezone.now())
+      self.time_out = timezone.localtime(timezone.now()) - datetime.timedelta(hours=8)
       self.time_2 = datetime.datetime.strftime("%m/%d/%Y %H:%M", self.time_out)
       self.current = False
       seconds = (self.time_out - self.time_in).seconds
