@@ -65,7 +65,7 @@ class Employee(models.Model):
       curentry = self.entry_set.filter(current=True)
       if curentry.count() is 0:
          self.logged_in = True
-         entry = Entry(employee=self, time_in=timezone.localtime(timezone.now())
+         entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))
          entry.time_1 = strftime("%m/%d/%Y %H:%M", entry.time_in.timetuple())
          self.save()
          entry.save()
