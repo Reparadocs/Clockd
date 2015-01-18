@@ -76,7 +76,7 @@ class Employee(models.Model):
       current_entry = self.entry_set.filter(current=True)
       if current_entry.count() is 1:
          self.logged_in = False
-         current_entry.clockout(self.hourly_rate)
+         current_entry[0].clockout(self.hourly_rate)
          return True
       else:
          return False
