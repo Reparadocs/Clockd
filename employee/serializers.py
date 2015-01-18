@@ -18,7 +18,7 @@ class HandshakeSerializer(serializers.ModelSerializer):
 
    class Meta:
       model = Employee
-      fields = ('id', 'first_name', 'last_name', 'hourly_rate', 'logged_in',
+      fields = ('id', 'first_name', 'last_name', 'hourly_rate',
        'employer_name', 'ibeacon')
 
 class PaySerializer(serializers.Serializer):
