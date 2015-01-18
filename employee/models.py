@@ -50,13 +50,22 @@ class Employee(models.Model):
       self.save()
 
    def clockin(self):
-      entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))
-      self.save()
-      entry.save()
+      curentry = self.entry_set.filter(current=True)
+      if curentry is 0:
+         entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))
+         self.save()
+         entry.save()
+         return True
+      else:
+         return False
 
    def clockout(self):
-      current_entry = self.entry_set.get(current=True)
-      current_entry.clockout(self.hourly_rate)
+      current_entry = self.entry_set.filter(current=True)
+      if(current_entry.count is 1):
+         current_entry.clockout(self.hourly_rate)
+         return True
+      else:
+         return False
 
    def get_pay(self, datetime1, datetime2):
       history = self.get_history(datetime1, datetime2)

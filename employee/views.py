@@ -37,16 +37,20 @@ class ClockIn(APIView):
       employee = get_employee(request.data['employee_id'])
       if not employee:
          return HttpResponseBadRequest("Invalid Employee ID")
-      employee.clockin()
-      return Response(status=status.HTTP_200_OK)
+      b = employee.clockin()
+      if b:
+         return Response(status=status.HTTP_200_OK)
+      return HttpResponseBadRequest
 
 class ClockOut(APIView):
    def post(self, request, format=None):
       employee = get_employee(request.data['employee_id'])
       if not employee:
          return HttpResponseBadRequest("Invalid Employee ID")
-      employee.clockout()      
-      return Response(status=status.HTTP_200_OK)
+      b = employee.clockout()     
+      if b: 
+         return Response(status=status.HTTP_200_OK)
+      return HttpResponseBadRequest
 
 
 class History(APIView):
