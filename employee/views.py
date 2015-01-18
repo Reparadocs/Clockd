@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -39,7 +39,7 @@ class ClockIn(APIView):
          return HttpResponseBadRequest("Invalid Employee ID")
       b = employee.clockin()
       if b:
-         return Response(status=status.HTTP_200_OK)
+         return HttpResponse('OK')
       return HttpResponseBadRequest("Already clocked in probs")
 
 class ClockOut(APIView):
@@ -49,7 +49,7 @@ class ClockOut(APIView):
          return HttpResponseBadRequest("Invalid Employee ID")
       b = employee.clockout()     
       if b: 
-         return Response(status=status.HTTP_200_OK)
+         return HttpResponse('OK')
       return HttpResponseBadRequest("No clock in probs")
 
 

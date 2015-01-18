@@ -4,7 +4,7 @@ from employee.models import Employee, Entry
 class EntrySerializer(serializers.ModelSerializer):
    class Meta:
       model = Entry
-      fields = ('time_in','time_out')
+      fields = ('time_1','time_2', 'pay')
 
 class HandshakeSerializer(serializers.ModelSerializer):
    employer_name = serializers.SerializerMethodField('getEmployerName')
