@@ -5,7 +5,7 @@ import random
 import datetime
 
 def get_date_time(string):
-   return datetime.datetime.strptime(string, "%d/%m/%Y")
+   return datetime.datetime.strptime(string, "%m/%d/%Y")
 
 class EmployeeManager(models.Manager):
    def create_employee(self, first_name, last_name, 
