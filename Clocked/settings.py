@@ -22,9 +22,6 @@ STATICFILES_DIRS = (
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -67,7 +64,7 @@ ROOT_URLCONF = 'Clocked.urls'
 
 WSGI_APPLICATION = 'Clocked.wsgi.application'
 
-
+DATABASES = {}
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -80,6 +77,11 @@ WSGI_APPLICATION = 'Clocked.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
+
+
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
 
 LANGUAGE_CODE = 'en-us'
 
