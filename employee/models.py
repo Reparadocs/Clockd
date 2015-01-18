@@ -3,6 +3,7 @@ from django.utils import timezone
 from employer.models import Employer
 import random
 import datetime
+from time import strftime
 
 def get_date_time(string):
    return datetime.datetime.strptime(string, "%m/%d/%Y")
@@ -65,7 +66,7 @@ class Employee(models.Model):
       if curentry.count() is 0:
          self.logged_in = True
          entry = Entry(employee=self, time_in=timezone.localtime(timezone.now())-datetime.timedelta(hours=8))
-         entry.time_1 = datetime.datetime.strftime("%m/%d/%Y %H:%M", entry.time_in)
+         entry.time_1 = strftime("%m/%d/%Y %H:%M", entry.time_in)
          self.save()
          entry.save()
          return True
@@ -129,7 +130,7 @@ class Entry(models.Model):
 
    def clockout(self, rate):
       self.time_out = timezone.localtime(timezone.now()) - datetime.timedelta(hours=8)
-      self.time_2 = datetime.datetime.strftime("%m/%d/%Y %H:%M", self.time_out)
+      self.time_2 = strftime("%m/%d/%Y %H:%M", self.time_out)
       self.current = False
       seconds = (self.time_out - self.time_in).seconds
       self.pay = int(seconds * rate / 3600)
