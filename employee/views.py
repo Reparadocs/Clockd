@@ -24,6 +24,16 @@ class Handshake(APIView):
             'employer_name': employer.name})
       return Response(serializer.data)
 
+class LoggedIn(APIView):
+   def post(self, request, format=None):
+      employee = get_employee(request.data['employee_id'])
+      if not employee:
+         return HttpResponseBadRequest("Invalid Employee ID")
+      serializer = HandshakeSerializer(employee,
+         context = {'ibeacon': employee.employer.ibeacon,
+            'employer_name': employee.employer.name})
+      return Response(serializer.data)
+
 class LogOut(APIView):
    def post(self, request, format=None):
       employee = get_employee(request.data['employee_id'])

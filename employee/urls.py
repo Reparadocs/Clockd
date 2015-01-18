@@ -8,4 +8,5 @@ urlpatterns = patterns('',
    url(r'^clockout/$', views.ClockOut.as_view()),
    url(r'^history/$', views.History.as_view()),
    url(r'^pay/$', views.Pay.as_view()),
+   url(r'^loggedin/$', views.LoggedIn.as_view()),
 )

@@ -5,7 +5,7 @@ class EntrySerializer(serializers.ModelSerializer):
    class Meta:
       model = Entry
       fields = ('time_1','time_2', 'pay')
-
+      
 class HandshakeSerializer(serializers.ModelSerializer):
    employer_name = serializers.SerializerMethodField('getEmployerName')
    ibeacon = serializers.SerializerMethodField('getIbeacon')
@@ -19,7 +19,7 @@ class HandshakeSerializer(serializers.ModelSerializer):
    class Meta:
       model = Employee
       fields = ('id', 'first_name', 'last_name', 'hourly_rate',
-       'employer_name', 'ibeacon')
+       'employer_name', 'ibeacon', 'logged_in')
 
 class PaySerializer(serializers.Serializer):
    pay = serializers.IntegerField()
