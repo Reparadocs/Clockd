@@ -16,7 +16,7 @@ def login(request):
             if realemp.count() is 1:
                real = realemp[0]
                return redirect(reverse('dashboard', args=(real.id)))
-   else
+   else:
       form = LoginForm()
    return render(request, 'form.html', {'form': form})
 
@@ -40,7 +40,7 @@ def edit(request, employer_id):
          employer.name = form.cleaned_data['name']
          employer.ibeacon = form.cleaned_data['ibeacon']
          employer.save()
-         return redirect(reverse'dashboard', args=(employer_id))
+         return redirect(reverse('dashboard', args=(employer_id)))
    else:
       form = EmployerForm(instance=employer)
    return render(request, 'form.html', {'form': form, 'employer': employer})

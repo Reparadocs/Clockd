@@ -15,4 +15,4 @@ class EmployeeForm(ModelForm):
 
 class LoginForm(forms.Form):
    name = forms.CharField(label='Company Name', max_length=30)
-   pin = forms.CharField(lable='PIN',widget=forms.PasswordInput,max_length=4)
+   pin = forms.CharField(label='PIN',widget=forms.PasswordInput,max_length=4)

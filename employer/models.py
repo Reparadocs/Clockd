@@ -5,7 +5,7 @@ class EmployerManager(models.Manager):
    def create_employer(self, name, ibeacon):
       while True:
          pin = random.randint(1000,9999)
-         if not Employer.objecbotts.filter(pin=pin):
+         if not Employer.objects.filter(pin=pin):
             break
 
       employer = self.create(name=name, pin=pin, ibeacon=ibeacon)
