@@ -51,7 +51,7 @@ class Employee(models.Model):
 
    def clockin(self):
       curentry = self.entry_set.filter(current=True)
-      if curentry is 0:
+      if curentry.count is 0:
          entry = Entry(employee=self, time_in=timezone.localtime(timezone.now()))
          self.save()
          entry.save()
