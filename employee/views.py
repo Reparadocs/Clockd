@@ -40,7 +40,7 @@ class ClockIn(APIView):
       b = employee.clockin()
       if b:
          return Response(status=status.HTTP_200_OK)
-      return HttpResponseBadRequest
+      return HttpResponseBadRequest("Already clocked in probs")
 
 class ClockOut(APIView):
    def post(self, request, format=None):
@@ -50,7 +50,7 @@ class ClockOut(APIView):
       b = employee.clockout()     
       if b: 
          return Response(status=status.HTTP_200_OK)
-      return HttpResponseBadRequest
+      return HttpResponseBadRequest("No clock in probs")
 
 
 class History(APIView):
