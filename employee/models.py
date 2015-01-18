@@ -6,7 +6,7 @@ import pytz
 
 def get_date_time(arr):
    string = "%02d-%02d-%d"%(arr[1],arr[0],arr[2])
-   return datetime.strptime(string, "%d-%m-%Y")
+   return datetime.datetime.strptime(string, "%d-%m-%Y")
 
 class EmployeeManager(models.Manager):
    def create_employee(self, first_name, last_name, 
